@@ -55,6 +55,29 @@ body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Ari
     opacity: 0; transition: opacity 1s;
 }
 
+/* --- 8 ẢNH BAY (Nâng cấp vị trí) --- */
+#floating-gallery { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; pointer-events: none; display: none; }
+
+.ornament {
+    position: absolute; width: 110px; height: 110px;
+    border-radius: 50%; border: 3px solid rgba(255, 255, 255, 0.9); object-fit: cover;
+    box-shadow: 0 0 20px rgba(255,255,255,0.6);
+}
+
+.effect-zoom { animation: zoomFloat 15s infinite ease-in-out alternate; }
+.effect-blur { animation: blurFloat 18s infinite ease-in-out alternate-reverse; }
+
+@keyframes zoomFloat {
+    0% { opacity: 0; transform: scale(0); }
+    10% { opacity: 1; transform: scale(1); }
+    100% { transform: scale(1) translate(20px, -20px); }
+}
+@keyframes blurFloat {
+    0% { opacity: 0; filter: blur(10px); }
+    10% { opacity: 1; filter: blur(0); }
+    100% { transform: translate(-20px, 20px); }
+}
+
 /* VỊ TRÍ 8 ẢNH (Phân bố đều màn hình) */
 .pos-1 { top: 10%; left: 10%; animation-delay: 0s; }
 .pos-2 { top: 20%; left: 80%; animation-delay: 0.5s; }
@@ -130,79 +153,4 @@ body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Ari
     45% { transform: translate(-50%, -50%) scale(1.12); box-shadow: 0 0 40px rgba(255,51,51,1); }
     60% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 30px rgba(255,51,51,0.8); }
     100% { transform: translate(-50%, -50%) scale(1); }
-}
-/* Hiệu ứng nhịp tim */
-@keyframes heartbeat {
-    0% { transform: translate(-50%, -50%) scale(1); }
-    15% { transform: translate(-50%, -50%) scale(1.12); box-shadow: 0 0 40px rgba(255,51,51,1); }
-    30% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 30px rgba(255,51,51,0.8); }
-    45% { transform: translate(-50%, -50%) scale(1.12); box-shadow: 0 0 40px rgba(255,51,51,1); }
-    60% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 30px rgba(255,51,51,0.8); }
-    100% { transform: translate(-50%, -50%) scale(1); }
-}
-/* ====================================================== */
-/* --- CẤU HÌNH RIÊNG CHO ĐIỆN THOẠI (MOBILE FIX) --- */
-/* ====================================================== */
-@media screen and (max-width: 768px) {
-
-    /* 1. XỬ LÝ VIDEO INTRO & NỀN */
-    /* Dùng 100dvh để full màn hình kể cả thanh địa chỉ của trình duyệt điện thoại */
-    #start-screen, #intro-screen, #main-content {
-        height: 100dvh !important;
-    }
-
-    #video-player, #main-bg-video {
-        width: 100%;
-        height: 100%;
-        /* Giữ cover để không bị vệt đen, chấp nhận mất 2 bên hình */
-        object-fit: cover !important; 
-        object-position: center center; /* Luôn lấy trung tâm video */
-    }
-
-    /* 2. XỬ LÝ LỜI CHÚC (Để không bị to quá) */
-    .content-wrapper {
-        /* Đẩy xuống ít hơn so với máy tính (chỉ 15% thay vì 40%) */
-        padding-top: 15vh !important; 
-        justify-content: flex-start !important;
-    }
-
-    #greeting-area {
-        width: 90% !important; /* Mở rộng khung ra sát lề điện thoại */
-        max-width: none !important;
-        padding: 15px !important;
-        
-        /* Nếu lời chúc dài quá thì cho phép cuộn dọc trong khung */
-        max-height: 50vh; 
-        overflow-y: auto; 
-    }
-
-    #greeting-text {
-        font-size: 18px !important; /* Chữ nhỏ lại cho vừa mắt */
-        line-height: 1.4 !important;
-    }
-
-    /* Chữ ký nhỏ lại chút */
-    #signature {
-        font-size: 20px !important;
-        margin-top: 15px !important;
-    }
-
-    /* 3. XỬ LÝ NÚT SẴN SÀNG (Màn hình 1) */
-    .modal-box {
-        width: 85% !important;
-        padding: 20px !important;
-    }
-    .modal-icon { font-size: 40px !important; }
-    .modal-title { font-size: 22px !important; }
-    
-    /* 4. CHỈNH LẠI ẢNH TRÁI TIM CHO ĐIỆN THOẠI (Thu nhỏ ảnh lại xíu) */
-    #floating-gallery.heart-mode .ornament {
-        width: 70px !important;  /* Ảnh nhỏ lại để xếp vừa màn hình hẹp */
-        height: 70px !important;
-    }
-    /* Riêng ảnh tâm giữa to hơn chút */
-    #floating-gallery.heart-mode .pos-5 {
-        width: 85px !important;
-        height: 85px !important;
-    }
 }

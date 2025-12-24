@@ -78,72 +78,66 @@ body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Ari
     100% { transform: translate(-20px, 20px); }
 }
 
-/* VỊ TRÍ 8 ẢNH (Phân bố đều màn hình) */
-.pos-1 { top: 10%; left: 10%; animation-delay: 0s; }
-.pos-2 { top: 20%; left: 80%; animation-delay: 0.5s; }
-.pos-3 { top: 70%; left: 15%; animation-delay: 1s; width: 130px; height: 130px; }
-.pos-4 { top: 60%; left: 70%; animation-delay: 1.5s; }
-.pos-5 { top: 40%; left: 50%; animation-delay: 0.2s; width: 150px; height: 150px; z-index: 12;} /* Ảnh chính giữa */
-.pos-6 { top: 80%; left: 40%; animation-delay: 0.8s; }
-.pos-7 { top: 15%; left: 40%; animation-delay: 1.2s; }
-.pos-8 { top: 50%; left: 5%;  animation-delay: 1.8s; }
-/* --- TRẠNG THÁI XẾP HÌNH TRÁI TIM (ĐÃ SỬA LỖI & TỐI ƯU) --- */
+/* ========================================= */
+/* --- CẤU HÌNH TỌA ĐỘ CHO ĐIỆN THOẠI (MẶC ĐỊNH) --- */
+/* ========================================= */
 
-/* Khi gallery có thêm class 'heart-mode' */
-#floating-gallery.heart-mode .ornament {
-    /* 1. QUAN TRỌNG: Dừng ngay lập tức các hiệu ứng bay/zoom/blur cũ */
-    animation: none !important;
-    opacity: 1 !important; /* Đảm bảo ảnh đang hiện rõ */
-    filter: blur(0) !important; /* Đảm bảo ảnh không bị mờ */
+/* 1. CẶP XANH LÁ (Đỉnh tim) */
+#floating-gallery.heart-mode .pos-1 { top: 20% !important; left: 25% !important; }
+#floating-gallery.heart-mode .pos-2 { top: 20% !important; left: 75% !important; }
 
-    /* 2. Thiết lập hiệu ứng di chuyển mượt mà về vị trí mới */
-    /* Sử dụng cubic-bezier để tạo gia tốc di chuyển tự nhiên hơn */
-    transition: all 3s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+/* 2. CẶP ĐỎ (Cánh ngoài) */
+#floating-gallery.heart-mode .pos-3 { top: 40% !important; left: 10% !important; }
+#floating-gallery.heart-mode .pos-4 { top: 40% !important; left: 90% !important; }
+
+/* 3. TRẮNG (Tâm giữa) */
+#floating-gallery.heart-mode .pos-5 { top: 42% !important; left: 50% !important; width: 120px; height: 120px; z-index: 101; }
+
+/* 4. CẶP XANH DƯƠNG (Eo dưới) */
+#floating-gallery.heart-mode .pos-6 { top: 65% !important; left: 28% !important; }
+#floating-gallery.heart-mode .pos-7 { top: 65% !important; left: 72% !important; }
+
+/* 5. ĐỈNH NHỌN DƯỚI CÙNG */
+#floating-gallery.heart-mode .pos-8 { top: 88% !important; left: 50% !important; }
+
+
+/* ========================================= */
+/* --- CẤU HÌNH RIÊNG CHO MÁY TÍNH/TABLET --- */
+/* (Màn hình rộng hơn 768px sẽ chạy đoạn này) */
+/* ========================================= */
+
+@media screen and (min-width: 768px) {
     
-    /* 3. Kích thước và kiểu dáng khi xếp thành tim */
-    width: 100px; 
-    height: 100px;
-    border-color: #ff3333; /* Đỏ tươi */
-    box-shadow: 0 0 30px rgba(255, 51, 51, 0.8);
-    
-    /* 4. Căn giữa tâm ảnh vào tọa độ */
-    transform: translate(-50%, -50%) scale(1) !important;
-    z-index: 100;
+    /* Tăng kích thước ảnh trên máy tính cho hoành tráng */
+    #floating-gallery.heart-mode .ornament {
+        width: 140px;
+        height: 140px;
+    }
+    #floating-gallery.heart-mode .pos-5 {
+        width: 160px !important;
+        height: 160px !important;
+    }
+
+    /* --- CĂN CHỈNH LẠI TỌA ĐỘ (Co vào giữa) --- */
+
+    /* 1. Đỉnh tim: Kéo vào gần nhau hơn */
+    #floating-gallery.heart-mode .pos-1 { top: 15% !important; left: 38% !important; }
+    #floating-gallery.heart-mode .pos-2 { top: 15% !important; left: 62% !important; }
+
+    /* 2. Cánh đỏ: Không để sát mép màn hình nữa */
+    #floating-gallery.heart-mode .pos-3 { top: 35% !important; left: 28% !important; }
+    #floating-gallery.heart-mode .pos-4 { top: 35% !important; left: 72% !important; }
+
+    /* 3. Tâm trắng: Nâng lên chút cho cân đối với màn hình ngang */
+    #floating-gallery.heart-mode .pos-5 { top: 40% !important; left: 50% !important; }
+
+    /* 4. Eo xanh dương: Co vào */
+    #floating-gallery.heart-mode .pos-6 { top: 60% !important; left: 40% !important; }
+    #floating-gallery.heart-mode .pos-7 { top: 60% !important; left: 60% !important; }
+
+    /* 5. Đỉnh nhọn: Giữ nguyên trục giữa */
+    #floating-gallery.heart-mode .pos-8 { top: 85% !important; left: 50% !important; }
 }
-
-/* --- SAU KHI ĐÃ VỀ VỊ TRÍ -> BẮT ĐẦU ĐẬP --- */
-/* Class này sẽ được JS thêm vào sau khi ảnh đã di chuyển xong */
-#floating-gallery.heart-beating .ornament {
-    animation: heartbeat 1.4s infinite ease-in-out !important;
-}
-
-
-/* --- TỌA ĐỘ HÌNH TRÁI TIM CHUẨN (Dựa trên hình vẽ tay) --- */
-
-/* 1. Đỉnh Trái (Cao) */
-#floating-gallery.heart-mode .pos-1 { top: 32% !important; left: 32% !important; }
-
-/* 2. Đỉnh Phải (Cao) */
-#floating-gallery.heart-mode .pos-2 { top: 32% !important; left: 68% !important; }
-
-/* 3. Cánh Ngoài Trái (Bầu bĩnh) */
-#floating-gallery.heart-mode .pos-3 { top: 45% !important; left: 18% !important; }
-
-/* 4. Cánh Ngoài Phải (Bầu bĩnh) */
-#floating-gallery.heart-mode .pos-4 { top: 45% !important; left: 82% !important; }
-
-/* 5. TÂM GIỮA (Vòng tròn trung tâm) */
-#floating-gallery.heart-mode .pos-5 { top: 55% !important; left: 50% !important; width: 110px; height: 110px; z-index: 101; }
-
-/* 6. Eo Dưới Trái */
-#floating-gallery.heart-mode .pos-6 { top: 68% !important; left: 35% !important; }
-
-/* 7. Eo Dưới Phải */
-#floating-gallery.heart-mode .pos-7 { top: 68% !important; left: 65% !important; }
-
-/* 8. ĐỈNH NHỌN DƯỚI CÙNG */
-#floating-gallery.heart-mode .pos-8 { top: 85% !important; left: 50% !important; }
-
 
 /* Hiệu ứng nhịp tim */
 @keyframes heartbeat {

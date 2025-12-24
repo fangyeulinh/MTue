@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Món Quà Giáng Sinh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <audio id="bg-music" loop>
+        <source src="nhac-nen.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="start-screen">
+        <div class="modal-box">
+            <div class="modal-icon">🎅</div>
+            <h2 class="modal-title">Ông già Noel tới rồi!</h2>
+            <p>Bạn đã sẵn sàng để nhận món quà đặc biệt chưa?</p>
+            <button id="ready-btn">Sẵn sàng</button>
+        </div>
+    </div>
+
+    <div id="intro-screen">
+        <video id="video-player" playsinline>
+            <source src="video-intro.mp4" type="video/mp4">
+        </video>
+        <button id="skip-btn">Bỏ qua Intro >></button>
+    </div>
+
+    <div id="main-content">
+        <video id="main-bg-video" muted loop playsinline>
+            <source src="video-nen-sau.mp4" type="video/mp4">
+        </video>
+
+        <div class="overlay-dark"></div>
+
+        <div class="content-wrapper" id="letter-container">
+            <h1 style="font-family: 'Pacifico', cursive; color: #ffeb3b;">Merry Christmas! 🎄</h1>
+            
+            <div id="greeting-area">
+                <p id="greeting-text"></p>
+            </div>
+            
+            <div id="signature">❤️ Người yêu của em - PMH</div>
+        </div>
+
+        <div id="floating-gallery">
+            <img src="anh1.jpeg" class="ornament effect-zoom pos-1">
+            <img src="anh2.jpeg" class="ornament effect-blur pos-2">
+            <img src="anh3.jpeg" class="ornament effect-zoom pos-3">
+            <img src="anh4.jpg" class="ornament effect-blur pos-4">
+            <img src="anh5.jpeg" class="ornament effect-zoom pos-5">
+            <img src="anh6.jpg" class="ornament effect-blur pos-6">
+            <img src="anh7.jpg" class="ornament effect-zoom pos-7">
+            <img src="anh8.jpg" class="ornament effect-blur pos-8"> </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

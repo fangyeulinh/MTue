@@ -1,0 +1,156 @@
+/* --- CẤU HÌNH CHUNG --- */
+body, html { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Arial', sans-serif; overflow: hidden; background-color: #000; }
+
+/* --- MÀN HÌNH 1 & 2 (Giữ nguyên như cũ) --- */
+#start-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 100; background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); display: flex; justify-content: center; align-items: center; }
+.modal-box { background: rgba(255, 255, 255, 0.4); box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); backdrop-filter: blur(10px); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.5); padding: 40px; text-align: center; max-width: 90%; width: 400px; color: #0f3460; }
+.modal-icon { font-size: 60px; margin-bottom: 20px; display: block;}
+.modal-title { font-size: 26px; font-weight: bold; color: #0056b3; margin: 0 0 10px 0; font-family: 'Pacifico', cursive; }
+#ready-btn { background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%); border: none; padding: 15px 50px; border-radius: 50px; color: white; font-size: 20px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.2s; font-weight: bold; margin-top: 20px; font-family: 'Pacifico', cursive; }
+#ready-btn:hover { transform: scale(1.05); }
+
+#intro-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 90; background: black; display: none; }
+#video-player { width: 100%; height: 100%; object-fit: cover; }
+#skip-btn { position: absolute; bottom: 20px; right: 20px; padding: 10px 20px; background: rgba(255,255,255,0.3); color: white; border: 1px solid white; cursor: pointer; z-index: 91; border-radius: 5px; }
+
+/* --- MÀN HÌNH 3: CHÍNH --- */
+#main-content { display: none; width: 100%; height: 100%; position: relative; overflow: hidden; }
+
+/* VIDEO NỀN & HIỆU ỨNG BLUR */
+#main-bg-video {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
+    z-index: 0;
+    transition: filter 2s ease; /* Chuyển đổi mờ/rõ trong 2 giây */
+}
+/* Class này sẽ được JS thêm vào lúc đầu để làm mờ */
+.is-blurred {
+    filter: blur(15px) brightness(0.6); /* Mờ và tối đi */
+    transform: scale(1.1); /* Phóng to nhẹ để ko bị lộ viền trắng khi blur */
+}
+
+/* KHUNG CHỨA LỜI CHÚC */
+/* Tìm và sửa đoạn này trong style.css */
+.content-wrapper {
+    position: relative; z-index: 5; text-align: center; color: white;
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    
+    /* QUAN TRỌNG: Sửa thành 2s */
+    transition: opacity 2s ease; 
+}
+
+#greeting-area {
+    width: 80%; max-width: 700px;
+    padding: 10px;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.8); /* Đổ bóng chữ cho dễ đọc */
+}
+#greeting-text {
+    font-size: 28px; /* Chữ to hơn */
+    line-height: 1.5;
+    font-family: 'Dancing Script', cursive; /* FONT VIẾT TAY */
+    font-weight: 700;
+}
+#signature {
+    margin-top: 20px; font-family: 'Dancing Script', cursive; font-size: 24px; color: #ff9ff3;
+    opacity: 0; transition: opacity 1s;
+}
+
+/* --- 8 ẢNH BAY (Nâng cấp vị trí) --- */
+#floating-gallery { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; pointer-events: none; display: none; }
+
+.ornament {
+    position: absolute; width: 110px; height: 110px;
+    border-radius: 50%; border: 3px solid rgba(255, 255, 255, 0.9); object-fit: cover;
+    box-shadow: 0 0 20px rgba(255,255,255,0.6);
+}
+
+.effect-zoom { animation: zoomFloat 15s infinite ease-in-out alternate; }
+.effect-blur { animation: blurFloat 18s infinite ease-in-out alternate-reverse; }
+
+@keyframes zoomFloat {
+    0% { opacity: 0; transform: scale(0); }
+    10% { opacity: 1; transform: scale(1); }
+    100% { transform: scale(1) translate(20px, -20px); }
+}
+@keyframes blurFloat {
+    0% { opacity: 0; filter: blur(10px); }
+    10% { opacity: 1; filter: blur(0); }
+    100% { transform: translate(-20px, 20px); }
+}
+
+/* VỊ TRÍ 8 ẢNH (Phân bố đều màn hình) */
+.pos-1 { top: 10%; left: 10%; animation-delay: 0s; }
+.pos-2 { top: 20%; left: 80%; animation-delay: 0.5s; }
+.pos-3 { top: 70%; left: 15%; animation-delay: 1s; width: 130px; height: 130px; }
+.pos-4 { top: 60%; left: 70%; animation-delay: 1.5s; }
+.pos-5 { top: 40%; left: 50%; animation-delay: 0.2s; width: 150px; height: 150px; z-index: 12;} /* Ảnh chính giữa */
+.pos-6 { top: 80%; left: 40%; animation-delay: 0.8s; }
+.pos-7 { top: 15%; left: 40%; animation-delay: 1.2s; }
+.pos-8 { top: 50%; left: 5%;  animation-delay: 1.8s; }
+/* --- TRẠNG THÁI XẾP HÌNH TRÁI TIM (ĐÃ SỬA LỖI & TỐI ƯU) --- */
+
+/* Khi gallery có thêm class 'heart-mode' */
+#floating-gallery.heart-mode .ornament {
+    /* 1. QUAN TRỌNG: Dừng ngay lập tức các hiệu ứng bay/zoom/blur cũ */
+    animation: none !important;
+    opacity: 1 !important; /* Đảm bảo ảnh đang hiện rõ */
+    filter: blur(0) !important; /* Đảm bảo ảnh không bị mờ */
+
+    /* 2. Thiết lập hiệu ứng di chuyển mượt mà về vị trí mới */
+    /* Sử dụng cubic-bezier để tạo gia tốc di chuyển tự nhiên hơn */
+    transition: all 3s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+    
+    /* 3. Kích thước và kiểu dáng khi xếp thành tim */
+    width: 100px; 
+    height: 100px;
+    border-color: #ff3333; /* Đỏ tươi */
+    box-shadow: 0 0 30px rgba(255, 51, 51, 0.8);
+    
+    /* 4. Căn giữa tâm ảnh vào tọa độ */
+    transform: translate(-50%, -50%) scale(1) !important;
+    z-index: 100;
+}
+
+/* --- SAU KHI ĐÃ VỀ VỊ TRÍ -> BẮT ĐẦU ĐẬP --- */
+/* Class này sẽ được JS thêm vào sau khi ảnh đã di chuyển xong */
+#floating-gallery.heart-beating .ornament {
+    animation: heartbeat 1.4s infinite ease-in-out !important;
+}
+
+
+/* --- TỌA ĐỘ HÌNH TRÁI TIM CHUẨN (Dựa trên hình vẽ tay) --- */
+
+/* 1. Đỉnh Trái (Cao) */
+#floating-gallery.heart-mode .pos-1 { top: 32% !important; left: 32% !important; }
+
+/* 2. Đỉnh Phải (Cao) */
+#floating-gallery.heart-mode .pos-2 { top: 32% !important; left: 68% !important; }
+
+/* 3. Cánh Ngoài Trái (Bầu bĩnh) */
+#floating-gallery.heart-mode .pos-3 { top: 45% !important; left: 18% !important; }
+
+/* 4. Cánh Ngoài Phải (Bầu bĩnh) */
+#floating-gallery.heart-mode .pos-4 { top: 45% !important; left: 82% !important; }
+
+/* 5. TÂM GIỮA (Vòng tròn trung tâm) */
+#floating-gallery.heart-mode .pos-5 { top: 55% !important; left: 50% !important; width: 110px; height: 110px; z-index: 101; }
+
+/* 6. Eo Dưới Trái */
+#floating-gallery.heart-mode .pos-6 { top: 68% !important; left: 35% !important; }
+
+/* 7. Eo Dưới Phải */
+#floating-gallery.heart-mode .pos-7 { top: 68% !important; left: 65% !important; }
+
+/* 8. ĐỈNH NHỌN DƯỚI CÙNG */
+#floating-gallery.heart-mode .pos-8 { top: 85% !important; left: 50% !important; }
+
+
+/* Hiệu ứng nhịp tim */
+@keyframes heartbeat {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    15% { transform: translate(-50%, -50%) scale(1.12); box-shadow: 0 0 40px rgba(255,51,51,1); }
+    30% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 30px rgba(255,51,51,0.8); }
+    45% { transform: translate(-50%, -50%) scale(1.12); box-shadow: 0 0 40px rgba(255,51,51,1); }
+    60% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 30px rgba(255,51,51,0.8); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+}

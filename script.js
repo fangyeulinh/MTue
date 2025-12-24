@@ -1,5 +1,5 @@
 // --- CẤU HÌNH ---
-const message = "Gửi Hương Giang thân yêu,\nChúc Hương Giang của anh mùa Giáng sinh an lành, hạnh phúc và luôn tràn ngập niềm vui.\nHy vọng mùa lễ này mang đến cho em thật nhiều điều ấm áp và thêm những khoảnh khắc đáng nhớ bên anh.\nMerry Christmas! 🎄✨";
+const message = "Gửi Minh Tuệ thân yêu,\nChúc Minh Tuệ của anh mùa Giáng sinh an lành, hạnh phúc và luôn tràn ngập niềm vui.\nHy vọng mùa lễ này mang đến cho em thật nhiều điều ấm áp và thêm những khoảnh khắc đáng nhớ bên anh.\nMerry Christmas! 🎄✨";
 const typeSpeed = 50; // Tốc độ gõ chữ
 
 // --- LẤY CÁC PHẦN TỬ ---

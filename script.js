@@ -1,8 +1,8 @@
 // --- CẤU HÌNH ---
-const message = "Gửi Minh Tuệ thân yêu,\nChúc Minh Tuệ của anh mùa Giáng sinh an lành, hạnh phúc và luôn tràn ngập niềm vui.\nHy vọng mùa lễ này mang đến cho em thật nhiều điều ấm áp và thêm những khoảnh khắc đáng nhớ bên anh.\nMerry Christmas! 🎄✨";
-const typeSpeed = 60; // Tốc độ gõ chữ
+const message = "Gửi Hương Giang thân yêu,\nChúc Hương Giang của anh mùa Giáng sinh an lành, hạnh phúc và luôn tràn ngập niềm vui.\nHy vọng mùa lễ này mang đến cho em thật nhiều điều ấm áp và thêm những khoảnh khắc đáng nhớ bên anh.\nMerry Christmas! 🎄✨";
+const typeSpeed = 50; // Tốc độ gõ chữ
 
-// --- DOM ELEMENTS ---
+// --- LẤY CÁC PHẦN TỬ ---
 const startScreen = document.getElementById('start-screen');
 const readyBtn = document.getElementById('ready-btn');
 const introScreen = document.getElementById('intro-screen');
@@ -14,22 +14,24 @@ const greetingText = document.getElementById('greeting-text');
 const gallery = document.getElementById('floating-gallery');
 const letterContainer = document.getElementById('letter-container');
 const signature = document.getElementById('signature');
-const skipBtn = document.getElementById('skip-btn');
+// Đã xóa dòng lấy skipBtn
 
-// 1. START BUTTON
+// --- SỰ KIỆN ---
+
+// 1. BẤM NÚT SẴN SÀNG
 readyBtn.addEventListener('click', () => {
     startScreen.style.display = 'none';
     introScreen.style.display = 'block';
-    audio.play().catch(e => console.log("Audio autoplay blocked"));
+    audio.play().catch(() => console.log("Cần tương tác để phát nhạc"));
     videoPlayer.play();
 });
 
-// 2. CHUYỂN QUA MÀN HÌNH CHÍNH
+// 2. CHUYỂN QUA MÀN HÌNH CHÍNH (Chỉ chạy khi video hết)
 function showMainContent() {
     introScreen.style.display = 'none';
     mainContent.style.display = 'block';
     
-    // QUAN TRỌNG: Làm mờ video ngay lập tức để hiện chữ
+    // Làm mờ video để hiện chữ
     mainBgVideo.classList.add('is-blurred');
     mainBgVideo.play();
     
@@ -37,19 +39,15 @@ function showMainContent() {
     typeWriter();
 }
 
+// Khi video intro chạy xong -> Tự chuyển
 videoPlayer.onended = () => showMainContent();
-skipBtn.addEventListener('click', () => {
-    videoPlayer.pause();
-    showMainContent();
-});
 
-// 3. HIỆU ỨNG GÕ CHỮ & XỬ LÝ KẾT THÚC
-// --- THAY THẾ ĐOẠN TYPEWRITER CŨ BẰNG ĐOẠN NÀY ---
+// Đã xóa sự kiện click của skipBtn
 
+// 3. HIỆU ỨNG GÕ CHỮ & LOGIC KẾT THÚC
 let i = 0;
 function typeWriter() {
     if (i < message.length) {
-        // Xử lý xuống dòng
         if (message.charAt(i) === '\n') {
             greetingText.innerHTML += '<br>';
         } else {
@@ -57,25 +55,31 @@ function typeWriter() {
         }
         i++;
         setTimeout(typeWriter, typeSpeed);
-    // --- THAY THẾ PHẦN "ELSE" TRONG HÀM TYPEWRITER ---
-
-// ... (đoạn trên giữ nguyên) ...
     } else {
         // --- KHI VIẾT XONG ---
-        
-        // 1. Hiện ảnh & Xóa mờ (Giai đoạn bay lượn)
+        console.log("Xong chữ. Bắt đầu hiện ảnh.");
+
+        // 1. Hiện ảnh & Xóa mờ nền NGAY LẬP TỨC
         signature.style.opacity = '1'; 
         gallery.style.display = 'block';
         mainBgVideo.classList.remove('is-blurred');
         
-        // 2. Mờ lời chúc
+        // 2. Mờ dần lời chúc và ẩn đi
         letterContainer.style.opacity = '0';
         setTimeout(() => { letterContainer.style.display = 'none'; }, 2000);
 
-        // 3. --- QUAN TRỌNG: SAU 4 GIÂY BAY LƯỢN -> XẾP HÌNH TRÁI TIM ---
+        // 3. --- GIAI ĐOẠN 1: BAY TỰ DO (4 giây) ---
         setTimeout(() => {
-            // Thêm class này để kích hoạt CSS xếp hình
+            // --- GIAI ĐOẠN 2: XẾP HÌNH TRÁI TIM ---
+            console.log("Hết 4s bay. Bắt đầu xếp tim.");
             gallery.classList.add('heart-mode');
-        }, 4000); // 4000ms = 4 giây sau khi ảnh hiện ra
+
+            // --- GIAI ĐOẠN 3: ĐẬP THÌNH THỊCH (Sau khi xếp xong 2.5s) ---
+            setTimeout(() => {
+                console.log("Đã xếp xong. Bắt đầu đập.");
+                gallery.classList.add('heart-beating');
+            }, 2500); 
+
+        }, 4000); 
     }
 }
